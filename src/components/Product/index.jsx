@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
-import { useParams } from "react-router-dom";
-import { append, isNotNil } from "ramda";
+import productsApi from "apis/products";
 import { Header, PageLoader, PageNotFound } from "components/commons";
 import { Typography } from "neetoui";
+import { append, isNotNil } from "ramda";
+import { useParams } from "react-router-dom";
 
 import Carousel from "./Carousel";
 
-import productsApi from "/apis/products";
-
 const Product = () => {
-  const { slug } = useParams();
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [product, setProduct] = useState({});
+
+  const { slug } = useParams();
 
   const fetchProduct = async () => {
     try {
@@ -30,6 +30,7 @@ const Product = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
+
   const { name, description, mrp, offerPrice, imageUrls, imageUrl } = product;
 
   const totalDiscounts = mrp - offerPrice;
